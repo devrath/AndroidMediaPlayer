@@ -16,6 +16,9 @@
 ## `Functionalities`
 **`Function`** `Enabling simple communication with server and client`
 * `Branch` -> `step_1_connecting_client_and_server`
+* `Observation`  
+**`Function`** `Keeping service running when the client is not in the foreground`
+* `Branch` -> `step_2_started_plus_bound`
 
 
 
