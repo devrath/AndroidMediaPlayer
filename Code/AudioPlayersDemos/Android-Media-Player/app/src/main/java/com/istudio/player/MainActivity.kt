@@ -6,27 +6,22 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.os.Message
+import android.os.Messenger
+import android.os.RemoteException
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.istudio.player.databinding.ActivityMainBinding
+import com.istudio.player.handlers.ActivityHandler
 import com.istudio.player.service.PlayerService
-import com.istudio.player.ui.theme.PlayerTheme
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var mServiceMessenger : Messenger
+    private var mActivityMessenger : Messenger = Messenger(ActivityHandler(this))
     private var isServiceBound = false
-    private lateinit var mPlayerService : PlayerService
+
 
     /**
      * < ************************** > LifeCycle Methods < **************************>
@@ -103,15 +98,15 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             playAndPauseId.setOnClickListener {
                 if(isServiceBound){
-                    if (mPlayerService.isPlayerPlaying()){
-                        mPlayerService.pause()
-                        playAndPauseId.setText(R.string.str_play)
-                    }else{
-                        // Start the service again for started service
-                        startService(serviceInstance())
+                    startService(serviceInstance())
 
-                        mPlayerService.play()
-                        playAndPauseId.setText(R.string.str_pause)
+                    val message = Message.obtain()
+                    message.arg1 = 2
+                    message.replyTo = mActivityMessenger
+                    try {
+                        mServiceMessenger.send(message)
+                    } catch (e: RemoteException) {
+                        throw RuntimeException(e)
                     }
                 }
             }
@@ -119,6 +114,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    public fun changePlayButtonText(text: String){
+        binding.playAndPauseId.text = text
     }
 
     private fun bindPlayerService() {
@@ -140,13 +139,18 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, iBinder: IBinder?) {
             Log.d(APP_TAG, "Player Service onServiceConnected")
             isServiceBound = true
-            val localBinder = iBinder as PlayerService.LocalBinder
-            mPlayerService = localBinder.service
+            mServiceMessenger = Messenger(iBinder)
 
-            // If the player is playing set the test to pause
-            if (mPlayerService.isPlayerPlaying()){
-                binding.playAndPauseId.setText(R.string.str_pause)
+            val message = Message.obtain()
+            message.arg1 = 2
+            message.arg2 = 1
+            message.replyTo = mActivityMessenger
+            try {
+                mServiceMessenger.send(message)
+            } catch (e: RemoteException) {
+                throw RuntimeException(e)
             }
+
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
