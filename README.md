@@ -14,12 +14,17 @@
 </div>
 
 ## `Functionalities`
-**`Function`** `Enabling simple communication with server and client`
+**`Function-1`** `Enabling simple communication with server and client`
 * `Branch` -> `step_1_connecting_client_and_server`
   
-**`Function`** `Keeping service running when the client is not in the foreground`
+**`Function-2`** `Keeping service running when the client is not in the foreground`
 * `Branch` -> `step_2_started_plus_bound`
-
+* `Observation`
+   * In the `function-1` we note that when we minimize the app, The `unbind` is called so the service is destroyed, And the player stops playing
+   * So the client is destroyed so is the service
+   * As a result we need a way to keep the service `bound + started` state so that even if the unbind is called, The service is still in the started state.
+   * So when we open the client again, The client must be able to bind to the same service again and we can control the service.
+   * We can achieve this by starting our service and not stopping service until the player is completely done playing. 
 
 
 ## **`𝚂𝚞𝚙𝚙𝚘𝚛𝚝`** ☕
