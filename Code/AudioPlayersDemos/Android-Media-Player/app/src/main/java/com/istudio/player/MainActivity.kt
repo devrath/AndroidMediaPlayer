@@ -107,6 +107,9 @@ class MainActivity : AppCompatActivity() {
                         mPlayerService.pause()
                         playAndPauseId.setText(R.string.str_play)
                     }else{
+                        // Start the service again for started service
+                        startService(serviceInstance())
+
                         mPlayerService.play()
                         playAndPauseId.setText(R.string.str_pause)
                     }
@@ -119,9 +122,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindPlayerService() {
-        val service = Intent(this, PlayerService::class.java)
-        bindService(service,serviceConn,Context.BIND_AUTO_CREATE)
+        bindService(serviceInstance(),serviceConn,Context.BIND_AUTO_CREATE)
     }
+
+    private fun serviceInstance() = Intent(this, PlayerService::class.java)
 
     private fun unBindPlayerService(){
         unbindService(serviceConn)

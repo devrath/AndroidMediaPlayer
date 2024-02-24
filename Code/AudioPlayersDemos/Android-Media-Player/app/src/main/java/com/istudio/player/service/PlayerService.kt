@@ -31,8 +31,7 @@ class PlayerService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        initOnStartCommand()
-        return super.onStartCommand(intent, flags, startId)
+        return initOnStartCommand()
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
@@ -66,8 +65,16 @@ class PlayerService : Service() {
         return mBinder
     }
 
-    private fun initOnStartCommand() {
+    private fun initOnStartCommand(): Int {
         Log.d(APP_TAG, "PlayerService - onStartCommand is called")
+
+        player.setOnCompletionListener {
+            // Stop self will stop the service immediately regardless if its working or not
+            stopSelf()
+        }
+
+        // Don't recreate it if killed, Because if we restart the service, We will have a service started with no music playing
+        return START_NOT_STICKY
     }
 
     private fun initOnUnBind() {
