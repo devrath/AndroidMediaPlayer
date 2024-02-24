@@ -102,7 +102,15 @@ class MainActivity : AppCompatActivity() {
     private fun setOnClickListeners() {
         binding.apply {
             playAndPauseId.setOnClickListener {
-
+                if(isServiceBound){
+                    if (mPlayerService.isPlayerPlaying()){
+                        mPlayerService.pause()
+                        playAndPauseId.setText(R.string.str_play)
+                    }else{
+                        mPlayerService.play()
+                        playAndPauseId.setText(R.string.str_pause)
+                    }
+                }
             }
             stopId.setOnClickListener {
 
@@ -130,6 +138,11 @@ class MainActivity : AppCompatActivity() {
             isServiceBound = true
             val localBinder = iBinder as PlayerService.LocalBinder
             mPlayerService = localBinder.service
+
+            // If the player is playing set the test to pause
+            if (mPlayerService.isPlayerPlaying()){
+                binding.playAndPauseId.setText(R.string.str_pause)
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {

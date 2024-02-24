@@ -101,6 +101,8 @@ class PlayerService : Service() {
      * < ************************** > Client Methods < *****************************>
      */
 
+    fun isPlayerPlaying() = player.isPlaying
+
     fun play(){
         player.start()
     }
