@@ -10,6 +10,7 @@
 | ---------- |
 | [`Where to bind and where to unbind the bound service`](https://github.com/devrath/AndroidMediaPlayer/wiki/Where-to-bind-and-where-to-unbind-the-bound-service) |
 | [`How to get an instance of service into our activity`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-get-an-instance-of-service-into-our-activity) |
+| [`Functionalities`]() |
 
 </div>
 
