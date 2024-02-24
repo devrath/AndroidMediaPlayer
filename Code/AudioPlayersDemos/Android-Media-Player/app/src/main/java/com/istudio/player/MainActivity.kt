@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private var isServiceBound = false
+    private lateinit var mPlayerService : PlayerService
 
     /**
      * < ************************** > LifeCycle Methods < **************************>
@@ -124,9 +125,11 @@ class MainActivity : AppCompatActivity() {
 
     private val serviceConn = object : ServiceConnection {
 
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        override fun onServiceConnected(name: ComponentName?, iBinder: IBinder?) {
             Log.d(APP_TAG, "Player Service onServiceConnected")
             isServiceBound = true
+            val localBinder = iBinder as PlayerService.LocalBinder
+            mPlayerService = localBinder.service
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
