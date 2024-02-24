@@ -16,6 +16,10 @@
 ## `Functionalities`
 **`Function-1`** `Enabling simple communication with server and client`
 * `Branch` -> `step_1_connecting_client_and_server`
+* `Observation`
+   * Service is playing when clicked play
+* `Drawback`
+   * When you minimize the app the service is stopped because `Unbind` is called. We should be able to play the service even though we minimize the app. 
   
 **`Function-2`** `Keeping service running when the client is not in the foreground`
 * `Branch` -> `step_2_started_plus_bound`
@@ -25,7 +29,8 @@
    * As a result we need a way to keep the service `bound + started` state so that even if the unbind is called, The service is still in the started state.
    * So when we open the client again, The client must be able to bind to the same service again and we can control the service.
    * We can achieve this by starting our service and not stopping service until the player is completely done playing. 
-
+* `Drawback`
+   * When you minimize the app the service and kill the app the service is stopped, We should be able to play the service even if the app is killed once the service is started
 
 ## **`𝚂𝚞𝚙𝚙𝚘𝚛𝚝`** ☕
 𝙸𝚏 𝚢𝚘𝚞 𝚏𝚎𝚎𝚕 𝚕𝚒𝚔𝚎 𝚜𝚞𝚙𝚙𝚘𝚛𝚝 𝚖𝚎 𝚊 𝚌𝚘𝚏𝚏𝚎𝚎 𝚏𝚘𝚛 𝚖𝚢 𝚎𝚏𝚏𝚘𝚛𝚝𝚜, 𝙸 𝚠𝚘𝚞𝚕𝚍 𝚐𝚛𝚎𝚊𝚝𝚕𝚢 𝚊𝚙𝚙𝚛𝚎𝚌𝚒𝚊𝚝𝚎 𝚒𝚝.</br>
