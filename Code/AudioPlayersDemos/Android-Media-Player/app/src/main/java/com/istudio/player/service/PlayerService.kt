@@ -32,6 +32,11 @@ class PlayerService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        initOnUnBind()
+        return super.onUnbind(intent)
+    }
+
 
     override fun onDestroy() {
         initOnDestroy()
@@ -62,11 +67,43 @@ class PlayerService : Service() {
         Log.d(APP_TAG, "PlayerService - onStartCommand is called")
     }
 
+    private fun initOnUnBind() {
+        Log.d(APP_TAG, "PlayerService - onUnBind is called")
+    }
+
     private fun initOnDestroy() {
         Log.d(APP_TAG, "PlayerService - onDestroy is called")
+        player.release()
     }
     /**
      * < ************************** > Init Methods < *****************************>
+     */
+
+
+    /**
+     * < ************************** > Client Methods < *****************************>
+     */
+
+    fun play(){
+        player.start()
+    }
+
+    fun pause(){
+        player.pause()
+    }
+
+    fun stop(){
+        if(player.isPlaying){
+            player.stop()
+        }
+    }
+
+    fun togglePlayPause(){
+        if(player.isPlaying){ pause() } else{ play() }
+    }
+
+    /**
+     * < ************************** > Client Methods < *****************************>
      */
 
 }
