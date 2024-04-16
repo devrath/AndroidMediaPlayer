@@ -57,7 +57,7 @@ class PlayerService : Service() {
 
     private fun initOnCreate() {
         Log.d(APP_TAG, "PlayerService - onCreate is called")
-        // Initialize the media player
+        // Initialize the media player - Because its called only once during the lifecycle of the player
         player = MediaPlayer.create(context,R.raw.demo_music)
     }
 
