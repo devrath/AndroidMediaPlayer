@@ -119,6 +119,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindPlayerService() {
+        // BIND_AUTO_CREATE --> Have the service auto created when we bind to it.
         val service = Intent(this, PlayerService::class.java)
         bindService(service,serviceConn,Context.BIND_AUTO_CREATE)
     }
