@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    // This flag is used to indicate if a service is bounded/unbounded at any particular point in time.
     private var isServiceBound = false
     private lateinit var mPlayerService : PlayerService
 
@@ -104,10 +105,18 @@ class MainActivity : AppCompatActivity() {
             playAndPauseId.setOnClickListener {
                 if(isServiceBound){
                     if (mPlayerService.isPlayerPlaying()){
+                        // <-------- Player is playing -------->
+
+                        // Pause the playing player
                         mPlayerService.pause()
+                        // Indicate next action to be done as play
                         playAndPauseId.setText(R.string.str_play)
                     }else{
+                        // <-------- Player is not playing -------->
+
+                        // Play the paused player
                         mPlayerService.play()
+                        // Indicate next action to be done as pause
                         playAndPauseId.setText(R.string.str_pause)
                     }
                 }
@@ -137,10 +146,12 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, iBinder: IBinder?) {
             Log.d(APP_TAG, "Player Service onServiceConnected")
             isServiceBound = true
+
+            // Get access to player service using IBinder reference from the service class
             val localBinder = iBinder as PlayerService.LocalBinder
             mPlayerService = localBinder.service
 
-            // If the player is playing set the test to pause
+            // If the player is playing set the text to pause
             if (mPlayerService.isPlayerPlaying()){
                 binding.playAndPauseId.setText(R.string.str_pause)
             }

@@ -86,6 +86,10 @@ class PlayerService : Service() {
     /**
      * < ************************** > Binder class < *****************************>
      */
+
+    /**
+     * Purpose of binder is to provide reference to our service for our activity
+     */
     inner class LocalBinder : Binder() {
         // We return the instance of this class in onBind method
         val service : PlayerService
