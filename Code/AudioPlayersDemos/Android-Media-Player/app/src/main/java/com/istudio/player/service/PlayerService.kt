@@ -31,8 +31,7 @@ class PlayerService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        initOnStartCommand()
-        return super.onStartCommand(intent, flags, startId)
+        return initOnStartCommand()
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
@@ -66,8 +65,16 @@ class PlayerService : Service() {
         return mBinder
     }
 
-    private fun initOnStartCommand() {
+    private fun initOnStartCommand(): Int {
         Log.d(APP_TAG, "PlayerService - onStartCommand is called")
+        // We perform NOT_STICKY flag because, Its possible that our service might crash and we should not restart it since there would be a player with no song
+
+        player.setOnCompletionListener {
+            // Also when the song has completed, We should stop the playing service.
+            stopSelf()
+        }
+
+        return START_NOT_STICKY
     }
 
     private fun initOnUnBind() {
