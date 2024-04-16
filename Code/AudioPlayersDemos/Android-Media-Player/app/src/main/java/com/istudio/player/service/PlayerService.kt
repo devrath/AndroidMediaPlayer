@@ -4,19 +4,23 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.os.Binder
 import android.os.IBinder
 import android.os.Messenger
 import android.util.Log
 import com.istudio.player.APP_TAG
 import com.istudio.player.R
+import com.istudio.player.handlers.PlayerHandler
 
 class PlayerService : Service() {
 
     private lateinit var player : MediaPlayer
     private val context : Context by lazy { this }
 
-    private val mMessenger = Messenger(PlayerHandler(this@PlayerService))
+    val mMessenger = Messenger(
+        PlayerHandler(
+            this@PlayerService
+        )
+    )
 
     /**
      * < ************************** > Service Methods < **************************>
