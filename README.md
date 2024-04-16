@@ -11,6 +11,7 @@
 | [`Where to bind and where to unbind the bound service`](https://github.com/devrath/AndroidMediaPlayer/wiki/Where-to-bind-and-where-to-unbind-the-bound-service) |
 | [`How to get an instance of service into our activity`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-get-an-instance-of-service-into-our-activity) |
 | [`How to make a service started and bound at the same time`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-make-a-service-started-and-bound-at-the-same-time) |
+| [`Using a seperate process`](https://github.com/devrath/AndroidMediaPlayer/wiki/Using-a-seperate-process) |
 | [`Functionalities`](https://github.com/devrath/AndroidMediaPlayer/wiki/Functionalities) |
 
 </div>
