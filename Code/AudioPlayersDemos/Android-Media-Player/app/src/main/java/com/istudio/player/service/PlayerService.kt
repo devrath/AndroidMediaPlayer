@@ -6,6 +6,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
+import android.os.Messenger
 import android.util.Log
 import com.istudio.player.APP_TAG
 import com.istudio.player.R
@@ -15,7 +16,7 @@ class PlayerService : Service() {
     private lateinit var player : MediaPlayer
     private val context : Context by lazy { this }
 
-    private val mBinder : IBinder = LocalBinder()
+    private val mMessenger = Messenger(PlayerHandler(this@PlayerService))
 
     /**
      * < ************************** > Service Methods < **************************>
@@ -62,7 +63,7 @@ class PlayerService : Service() {
 
     private fun initOnBind(): IBinder? {
         Log.d(APP_TAG, "PlayerService - onBind is called")
-        return mBinder
+        return mMessenger.binder
     }
 
     private fun initOnStartCommand(): Int {
@@ -97,11 +98,13 @@ class PlayerService : Service() {
     /**
      * Purpose of binder is to provide reference to our service for our activity
      */
-    inner class LocalBinder : Binder() {
+    /*inner class LocalBinder : Binder() {
         // We return the instance of this class in onBind method
         val service : PlayerService
             get() = this@PlayerService
-    }
+    }*/
+
+
     /**
      * < ************************** > Binder class < *****************************>
      */
