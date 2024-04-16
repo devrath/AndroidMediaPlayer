@@ -1,13 +1,19 @@
 package com.istudio.player.service
 
+import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.IBinder
 import android.os.Messenger
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.istudio.player.APP_TAG
+import com.istudio.player.Constants
+import com.istudio.player.Constants.NOTIFICATION_CHANNEL_ID
 import com.istudio.player.R
 import com.istudio.player.handlers.PlayerHandler
 
@@ -70,13 +76,21 @@ class PlayerService : Service() {
         return mMessenger.binder
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("ForegroundServiceType")
     private fun initOnStartCommand(): Int {
         Log.d(APP_TAG, "PlayerService - onStartCommand is called")
         // We perform NOT_STICKY flag because, Its possible that our service might crash and we should not restart it since there would be a player with no song
 
+        val notificationBuilder = Notification.Builder(this@PlayerService, NOTIFICATION_CHANNEL_ID)
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        val notification = notificationBuilder.build()
+        startForeground(11, notification)
+
         player.setOnCompletionListener {
             // Also when the song has completed, We should stop the playing service.
             stopSelf()
+            stopForeground(STOP_FOREGROUND_REMOVE)
         }
 
         return START_NOT_STICKY

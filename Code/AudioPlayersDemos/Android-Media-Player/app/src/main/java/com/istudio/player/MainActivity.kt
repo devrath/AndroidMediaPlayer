@@ -1,9 +1,11 @@
 package com.istudio.player
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Message
@@ -11,6 +13,8 @@ import android.os.Messenger
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -68,11 +72,15 @@ class MainActivity : AppCompatActivity() {
     /**
      * < ************************** > Init Methods < *****************************>
      */
+
     private fun initOnCreate() {
         Log.d(APP_TAG, "Activity - onCreate is called")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setOnClickListeners()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(POST_NOTIFICATIONS)
+        }
     }
 
     private fun initOnStart() {
@@ -141,6 +149,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun unBindPlayerService() {
         unbindService(serviceConn)
+    }
+
+    /**
+     * Request permission to display the notification
+     */
+    private fun requestPermissions(vararg permissions: String) {
+
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            result.entries.forEach {
+                Log.d("MainActivity", "${it.key} = ${it.value}")
+            }
+        }
+        requestPermissionLauncher.launch(permissions.asList().toTypedArray())
     }
 
     /**
