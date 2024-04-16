@@ -2,6 +2,7 @@ package com.istudio.player.service
 
 import android.annotation.SuppressLint
 import android.app.Notification
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -11,9 +12,11 @@ import android.os.IBinder
 import android.os.Messenger
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.istudio.player.APP_TAG
 import com.istudio.player.Constants
 import com.istudio.player.Constants.NOTIFICATION_CHANNEL_ID
+import com.istudio.player.MainActivity
 import com.istudio.player.R
 import com.istudio.player.handlers.PlayerHandler
 
@@ -79,13 +82,11 @@ class PlayerService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ForegroundServiceType")
     private fun initOnStartCommand(): Int {
-        Log.d(APP_TAG, "PlayerService - onStartCommand is called")
         // We perform NOT_STICKY flag because, Its possible that our service might crash and we should not restart it since there would be a player with no song
+        Log.d(APP_TAG, "PlayerService - onStartCommand is called")
 
-        val notificationBuilder = Notification.Builder(this@PlayerService, NOTIFICATION_CHANNEL_ID)
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
-        val notification = notificationBuilder.build()
-        startForeground(11, notification)
+        // Display notification
+        displayNotification()
 
         player.setOnCompletionListener {
             // Also when the song has completed, We should stop the playing service.
@@ -107,26 +108,6 @@ class PlayerService : Service() {
     /**
      * < ************************** > Init Methods < *****************************>
      */
-
-
-    /**
-     * < ************************** > Binder class < *****************************>
-     */
-
-    /**
-     * Purpose of binder is to provide reference to our service for our activity
-     */
-    /*inner class LocalBinder : Binder() {
-        // We return the instance of this class in onBind method
-        val service : PlayerService
-            get() = this@PlayerService
-    }*/
-
-
-    /**
-     * < ************************** > Binder class < *****************************>
-     */
-
 
 
     /**
@@ -156,5 +137,26 @@ class PlayerService : Service() {
     /**
      * < ************************** > Client Methods < *****************************>
      */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun displayNotification() {
+        val notificationIntent = Intent(this@PlayerService, MainActivity::class.java)
+        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingIntent = PendingIntent.getActivity(this@PlayerService, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val notificationBuilder = NotificationCompat.Builder(this@PlayerService, NOTIFICATION_CHANNEL_ID)
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        notificationBuilder.setContentTitle("Demo Music Title ")
+        notificationBuilder.setContentText("Click to open app and close the notification")
+        notificationBuilder.setContentIntent(pendingIntent) // Set the content intent
+        notificationBuilder.priority = NotificationCompat.PRIORITY_LOW // Set notification priority
+        val notification = notificationBuilder.build()
+        startForeground(11, notification)
+
+        /*val notificationBuilder = Notification.Builder(this@PlayerService, NOTIFICATION_CHANNEL_ID)
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        val notification = notificationBuilder.build()
+        startForeground(11, notification)*/
+    }
 
 }
