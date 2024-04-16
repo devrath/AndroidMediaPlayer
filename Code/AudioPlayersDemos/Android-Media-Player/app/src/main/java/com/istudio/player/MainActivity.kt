@@ -114,6 +114,11 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         // <-------- Player is not playing -------->
 
+
+                        // Here we shall make the service STARTED so that even if the activity is in background still the music plays
+                        val intent = Intent(this@MainActivity, PlayerService::class.java)
+                        startService(intent)
+
                         // Play the paused player
                         mPlayerService.play()
                         // Indicate next action to be done as pause
