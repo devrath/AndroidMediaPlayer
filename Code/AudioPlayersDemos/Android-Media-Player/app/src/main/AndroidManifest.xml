@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.PlayerService"/>
+        <service android:name=".service.PlayerService"
+                 android:process=":playerprocess"/>
 
     </application>
 
