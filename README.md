@@ -12,7 +12,7 @@
 | [`How to get an instance of service into our activity`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-get-an-instance-of-service-into-our-activity) |
 | [`How to make a service started and bound at the same time`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-make-a-service-started-and-bound-at-the-same-time) |
 | [`Using a seperate process`](https://github.com/devrath/AndroidMediaPlayer/wiki/Using-a-seperate-process) |
-| [`Demo`](https://github.com/devrath/AndroidMediaPlayer/wiki/Functionalities) |
+| [`Demo`](https://github.com/devrath/AndroidMediaPlayer/blob/main/README.md#demo) |
 
 </div>
 
