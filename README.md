@@ -12,9 +12,14 @@
 | [`How to get an instance of service into our activity`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-get-an-instance-of-service-into-our-activity) |
 | [`How to make a service started and bound at the same time`](https://github.com/devrath/AndroidMediaPlayer/wiki/How-to-make-a-service-started-and-bound-at-the-same-time) |
 | [`Using a seperate process`](https://github.com/devrath/AndroidMediaPlayer/wiki/Using-a-seperate-process) |
-| [`Functionalities`](https://github.com/devrath/AndroidMediaPlayer/wiki/Functionalities) |
+| [`Demo`](https://github.com/devrath/AndroidMediaPlayer/wiki/Functionalities) |
 
 </div>
+
+## `Demo`
+https://github.com/devrath/AndroidMediaPlayer/assets/1456191/08e240a3-7cae-45ae-a154-48d56a60a2c0
+
+
 
 
 ## **`𝚂𝚞𝚙𝚙𝚘𝚛𝚝`** ☕
