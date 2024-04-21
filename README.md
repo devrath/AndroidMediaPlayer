@@ -17,8 +17,11 @@
 </div>
 
 ## `Demo`
+<div align="center">
+  
 https://github.com/devrath/AndroidMediaPlayer/assets/1456191/08e240a3-7cae-45ae-a154-48d56a60a2c0
 
+</div>
 
 
 
